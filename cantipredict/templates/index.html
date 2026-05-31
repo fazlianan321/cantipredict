@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canti Predict</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div id="landingPage" class="landing-screen" style="background-image: linear-gradient(rgba(13, 50, 77, 0.65), rgba(127, 90, 131, 0.65)), url('/static/dermaga.jpg');">
+    <div class="landing-content">
+        <span class="landing-badge">Machine Learning System</span>
+        <h1>Selamat Datang di <br><span>Canti Predict</span></h1>
+        <p>Sistem cerdas prediksi jadwal kedatangan dan keberangkatan kapal Pelabuhan Canti berbasis kecerdasan buatan.</p>
+        <button class="landing-btn" onclick="masukSistem()">Masuk ke Sistem ➔</button>
+    </div>
+</div>
+
+<div class="container" id="mainSystem" style="display: none;">
+
+    <div class="sidebar">
+        <h2>Canti Predict</h2>
+        <ul>
+            <li onclick="showPage('home')">Dashboard</li>
+            <li onclick="showPage('predict')">Prediksi</li>
+            <li onclick="showPage('cuacaPage')">Cuaca</li>
+            <li onclick="showPage('maps')">Maps</li>
+        </ul>
+    </div>
+
+    <div class="main">
+
+        <div id="home" class="page active">
+            <h1>Dashboard Canti Predict 🚢</h1>
+            <p class="subtitle">Sistem Cerdas Prediksi Jadwal Keberangkatan & Kedatangan Kapal di Pelabuhan Canti</p>
+
+            <div class="banner-container">
+                <img src="{{ url_for('static', filename='pelabuhan.jpeg') }}" alt="Foto Pelabuhan Canti" class="banner-img">
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Status Pelabuhan</h3>
+                    <p class="stat-value text-green">Buka / Normal</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Algoritma AI</h3>
+                    <p class="stat-value">Random Forest</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Akurasi Prediksi</h3>
+                    <p class="stat-value">~ 92%</p>
+                </div>
+            </div>
+
+            <div class="card mt-20">
+                <h2 style="margin-bottom: 10px; color: #0d324d;">Cara Menggunakan Sistem</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-icon">1</div>
+                        <h4>Buka Prediksi</h4>
+                        <p>Pilih menu Prediksi di sidebar samping.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">2</div>
+                        <h4>Masukkan Data</h4>
+                        <p>Isi kondisi cuaca, gelombang, hari, dan penumpang.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">3</div>
+                        <h4>Dapatkan Jadwal</h4>
+                        <p>AI akan langsung menghitung estimasi waktu tiba & berangkat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="predict" class="page">
+            <h1>Prediksi Kapal</h1>
+
+            <div class="card">
+
+                <label>Cuaca</label>
+                <select id="input_cuaca">
+                    <option value="">Pilih Cuaca</option>
+                    <option value="0">Cerah</option>
+                    <option value="1">Berawan</option>
+                    <option value="2">Hujan</option>
+                </select>
+
+                <label>Gelombang</label>
+                <select id="gelombang">
+                    <option value="">Pilih Gelombang</option>
+                    <option value="0">Rendah</option>
+                    <option value="1">Sedang</option>
+                    <option value="2">Tinggi</option>
+                </select>
+
+                <label>Hari</label>
+                <select id="hari">
+                    <option value="">Pilih Hari</option>
+                    <option value="0">Weekday</option>
+                    <option value="1">Weekend</option>
+                </select>
+
+                <label>Jumlah Penumpang</label>
+                <input type="number" id="penumpang" placeholder="Masukkan jumlah penumpang">
+
+                <button onclick="prediksi()">Prediksi</button>
+
+            </div>
+
+            <div id="hasil"></div>
+        </div>
+
+        <div id="cuacaPage" class="page">
+            <h1>Cuaca Real-Time</h1>
+            <div class="card">
+                <iframe src="https://maritim.bmkg.go.id/cuaca/pelabuhan/pelabuhan-canti"></iframe>
+            </div>
+        </div>
+
+        <div id="maps" class="page">
+            <h1>Lokasi Pelabuhan</h1>
+            <div class="card">
+                <iframe src="https://maps.google.com/maps?q=pelabuhan%20canti&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+function masukSistem() {
+    const landing = document.getElementById('landingPage');
+    const mainSys = document.getElementById('mainSystem');
+    
+    // Efek animasi memudar perlahan (fade out)
+    landing.style.opacity = '0';
+    landing.style.transition = 'opacity 0.6s ease';
+    
+    setTimeout(() => {
+        landing.style.display = 'none';
+        mainSys.style.display = 'flex'; // Menampilkan dashboard utama dengan layout flex
+        mainSys.style.animation = 'fadeIn 0.6s ease';
+    }, 600);
+}
+</script>
+
+</body>
+</html>
